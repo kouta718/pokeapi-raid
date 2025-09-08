@@ -9,15 +9,7 @@
   <body>
 
     <h2>ポケAPIを使ったSVダメージ計算アプリ</h2>
-    <!-- レイドボス情報 -->
-    <section>
-      <h2>レイドボス設定</h2>
-      <input type="text" id="bossName" placeholder="例：tyranitar" />
-      <button id="fetchBoss">レイドボス検索</button>
-      <div id="bossInfo"></div>
-    </section>
-
-    <!-- プレイヤー設定 -->
+    <!-- レイド設定 -->
     <section>
       <h2>プレイヤー構成</h2>
       <label for="playerCount">プレイヤー人数:</label>
@@ -27,6 +19,34 @@
         <option value="3">3人</option>
         <option value="4" selected>4人</option>
       </select>
+      <h2>ターン数</h2>
+      <label for="turnCount">ターン数:</label>
+      <select id="turnCount">
+        <option value="1" selected>1ターン</option>
+        <option value="2">2ターン</option>
+        <option value="3">3ターン</option>
+        <option value="4">4ターン</option>
+      </select>
+    </section>
+
+    <!-- レイドボス情報 -->
+    <section>
+      <h2>レイドボス設定</h2>
+      <h3>星数</h3>
+      <label for="starCount">星数:</label>
+      <select id="starCount">
+        <option value="5">⭐︎5</option>
+        <option value="6" selected>⭐︎6</option>
+        <option value="7">⭐︎7</option>
+      </select>
+      <input type="text" id="bossName" placeholder="例：tyranitar" />
+      <button id="fetchBoss">レイドボス検索</button>
+      <div id="bossInfo"></div>
+      <label for="terraceType">テラスタイプ選択:</label>
+      <select id="terraceType">
+        <option value="1" selected>ほのお</option>
+      </select>
+      <!-- 性格補正と努力値は一応0を前提にするが、星7のイベントレイドは例外がある -->
     </section>
 
     <!-- アタッカー選択 -->
