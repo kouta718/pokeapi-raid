@@ -8,10 +8,10 @@
   </head>
   <body>
 
-    <h2>ポケAPIを使ったSVダメージ計算アプリ</h2>
+    <h2>ポケモンSVテラレイドバトルワンパン専用ダメージ計算アプリ</h2>
     <!-- レイド設定 -->
     <section>
-      <h2>プレイヤー構成</h2>
+      <h2>レイド設定</h2>
       <label for="playerCount">プレイヤー人数:</label>
       <select id="playerCount">
         <option value="1">1人</option>
@@ -19,57 +19,209 @@
         <option value="3">3人</option>
         <option value="4" selected>4人</option>
       </select>
-      <h2>ターン数</h2>
-      <label for="turnCount">ターン数:</label>
+      <label for="turnCount">想定想定ターン数:</label>
       <select id="turnCount">
-        <option value="1" selected>1ターン</option>
-        <option value="2">2ターン</option>
-        <option value="3">3ターン</option>
-        <option value="4">4ターン</option>
+        <option value="1" selected>1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
       </select>
     </section>
 
     <!-- レイドボス情報 -->
     <section>
       <h2>レイドボス設定</h2>
-      <h3>星数</h3>
       <label for="starCount">星数:</label>
       <select id="starCount">
         <option value="5">⭐︎5</option>
         <option value="6" selected>⭐︎6</option>
         <option value="7">⭐︎7</option>
       </select>
-      <input type="text" id="bossName" placeholder="例：tyranitar" />
-      <button id="fetchBoss">レイドボス検索</button>
-      <div id="bossInfo"></div>
-      <label for="terraceType">テラスタイプ選択:</label>
-      <select id="terraceType">
-        <option value="1" selected>ほのお</option>
-      </select>
-      <!-- 性格補正と努力値は一応0を前提にするが、星7のイベントレイドは例外がある -->
+      <label for="def-species">ポケモン</label>
+      <select id="def-species" name="defSpecies" data-populate="pokemon"></select>
+
+
+      <label for="def-tera">テラタイプ</label>
+      <select id="def-tera" name="defTera"></select>
+
+
+      <label for="def-nature">性格補正</label>
+      <select id="def-nature" name="defNature"></select>
     </section>
 
-    <!-- アタッカー選択 -->
-    <section>
-      <h2>アタッカー選択</h2>
-      <input type="text" id="attackerName" placeholder="例：lucario" />
-      <button id="fetchAttacker">アタッカー検索</button>
-      <div id="attackerInfo"></div>
+
+
+    <!-- 3. 攻撃側（メインアタッカー） -->
+    <fieldset>
+      <legend>攻撃側（メインアタッカー）</legend>
+
+
+      <label for="atk-species">ポケモン</label>
+      <select id="atk-species" name="atkSpecies" data-populate="pokemon"></select>
+
+
+      <label for="atk-ability">特性</label>
+      <select id="atk-ability" name="atkAbility"></select>
+
+
+      <label for="atk-item">持ち物</label>
+      <select id="atk-item" name="atkItem"></select>
+
+
+      <label for="atk-move-1">技1</label>
+      <select id="atk-move-1" name="atkMove1" data-populate-moves></select>
+
+
+      <label for="atk-move-2">技2</label>
+      <select id="atk-move-2" name="atkMove2" data-populate-moves></select>
+
+
+      <label for="atk-nature">性格補正</label>
+      <select id="atk-nature" name="atkNature"></select>
+
+
+      <div class="evs-ivs">
+        <label>努力値</label>
+        <input type="number" id="atk-ev-hp" name="atkEvsHp" min="0" max="252" value="252" />
+        <input type="number" id="atk-ev-atk" name="atkEvsAtk" min="0" max="252" value="252" />
+        <input type="number" id="atk-ev-def" name="atkEvsDef" min="0" max="252" value="0" />
+        <input type="number" id="atk-ev-spa" name="atkEvsSpa" min="0" max="252" value="0" />
+        <input type="number" id="atk-ev-spd" name="atkEvsSpd" min="0" max="252" value="4" />
+        <input type="number" id="atk-ev-spe" name="atkEvsSpe" min="0" max="252" value="0" />
+      </div>
+
+
+      <div>
+        <label for="atk-ivs-mode">個体値モード</label>
+        <select id="atk-ivs-mode" name="atkIvsMode">
+          <option value="max">自動最大</option>
+          <option value="manual">手入力</option>
+        </select>
+      </div>
+
+
+      <div id="atk-ivs-manual" style="display:none">
+        <label>個体値（0-31）</label>
+        <input type="number" id="atk-iv-hp" min="0" max="31" value="31" />
+        <input type="number" id="atk-iv-atk" min="0" max="31" value="31" />
+        <input type="number" id="atk-iv-def" min="0" max="31" value="31" />
+        <input type="number" id="atk-iv-spa" min="0" max="31" value="31" />
+        <input type="number" id="atk-iv-spd" min="0" max="31" value="31" />
+        <input type="number" id="atk-iv-spe" min="0" max="31" value="31" />
+      </div>
+
+
+    </fieldset>
+
+
+    <!-- 4. 攻撃側（サポートポケモン三体） -->
+    <fieldset>
+    <legend>攻撃側（サポートポケモン）</legend>
+
+
+    <!-- Support slots: 3 repeats. JS can clone or use these three blocks -->
+    <div class="support-slot" data-index="1">
+      <label for="def-species">ポケモン</label>
+      <h4>サポート1</h4>
+      <label>ポケモン</label>
+      <select class="support-species" data-populate="pokemon"></select>
+      <label>特性</label>
+      <select class="support-ability"></select>
+      <label>持ち物</label>
+      <select class="support-item"></select>
+      <label>技</label>
+      <select class="support-move" data-populate-moves></select>
+    </div>
+
+
+    <div class="support-slot" data-index="2">
+      <h4>サポート2</h4>
+      <label>ポケモン</label>
+      <select class="support-species" data-populate="pokemon"></select>
+      <label>特性</label>
+      <select class="support-ability"></select>
+      <label>持ち物</label>
+      <select class="support-item"></select>
+      <label>技</label>
+      <select class="support-move" data-populate-moves></select>
+    </div>
+
+
+    <div class="support-slot" data-index="3">
+      <h4>サポート3</h4>
+      <label>ポケモン</label>
+      <select class="support-species" data-populate="pokemon"></select>
+      <label>特性</label>
+      <select class="support-ability"></select>
+      <label>持ち物</label>
+      <select class="support-item"></select>
+      <label>技</label>
+      <select class="support-move" data-populate-moves></select>
+    </div>
+
+
+    </fieldset>
+
+
+    <!-- 5. バトル補正の状態表示 -->
+    <fieldset>
+    <legend>バトル補正</legend>
+
+
+    <div class="stat-stages">
+      <label>攻撃段階</label>
+      <input type="number" id="stage-atk" name="stageAtk" min="-6" max="6" value="0" />
+      <label>特攻段階</label>
+      <input type="number" id="stage-spa" name="stageSpa" min="-6" max="6" value="0" />
+      <label>防御段階</label>
+      <input type="number" id="stage-def" name="stageDef" min="-6" max="6" value="0" />
+      <label>特防段階</label>
+      <input type="number" id="stage-spd" name="stageSpd" min="-6" max="6" value="0" />
+    </div>
+
+
+    <label for="weather">天候</label>
+    <select id="weather" name="weather">
+      <option value="none">なし</option>
+      <option value="sun">晴れ</option>
+      <option value="rain">雨</option>
+      <option value="sand">砂嵐</option>
+      <option value="snow">雪</option>
+    </select>
+
+
+    <label for="field">フィールド</label>
+    <select id="field" name="field">
+      <option value="none">なし</option>
+      <option value="electric">エレキフィールド</option>
+      <option value="grassy">グラスフィールド</option>
+      <option value="misty">ミスティフィールド</option>
+      <option value="psychic">サイコフィールド</option>
+    </select>
+
+
+    <div class="support-effects">
+    <label><input type="checkbox" id="power-spot" name="powerSpot" /> パワースポット</label>
+    <label><input type="checkbox" id="damaging-orb" name="damagingOrb" /> わざわいのたま (命の珠系)</label>
+    </div>
+
+
+    </fieldset>
+
+
+    <button type="submit" id="calc-btn">計算する</button>
+
+    <!-- 結果表示領域（JSで出力） -->
+    <section id="result" aria-live="polite">
+    <!-- JS がここに結果（HP、与ダメージ範囲、ワンパン判定）を出力 -->
     </section>
 
-    <!-- サポート選択 -->
-    <section>
-      <h2>サポート選択（技から）</h2>
-      <label for="supportMove">使いたいサポート技:</label>
-      <select id="supportMove">
-        <option value="reflect">ひかりのかべ</option>
-        <option value="heal-pulse">いやしのはどう</option>
-        <option value="screech">いやなおと</option>
-        <!-- 他にも追加OK -->
-      </select>
-      <button id="suggestSupport">おすすめポケモン表示</button>
-      <div id="supportSuggestions"></div>
-    </section>
+
+    <!-- 開発注記：
+    - data-populate="pokemon" 属性の select は JS 側で PokeAPI を利用して候補を埋めます。
+    - data-populate-moves のついた select は選択ポケモンに応じて習得技リストを埋める想定です。
+    - 特性・持ち物リストも JS 側で算出して埋めてください。
+    - 計算は WebWorker に移しても良いです（重い場合）。
+    -->
 
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
