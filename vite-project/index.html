@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -38,8 +38,11 @@
         <option value="7">⭐︎7</option>
       </select>
       <label for="def-species">ポケモン</label>
-      <select id="def-species" name="defSpecies" data-populate="pokemon"></select>
-      <label for="def-tera">テラタイプ</label>
+      <input id="def-species" name="defSpecies" data-populate="pokemon">
+      <button type="button" class="searchBtn" data-slot="defender">検索</button>
+      <label for="def-ability">特性</label>
+      <select id="def-ability" name="defAbility"></select>
+      <label for="def-tera">テラスタイプ</label>
       <select id="def-tera" name="defTera"></select>
     </fieldset>
 
@@ -50,7 +53,8 @@
       <legend>攻撃側（メインアタッカー）</legend>
 
       <label for="atk-species">ポケモン</label>
-      <input type="text" id="atk-species" name="atkSpecies" data-populate="pokemon"></input>
+      <input type="text" id="atk-species" name="atkSpecies" data-populate="pokemon">
+      <button type="button" class="searchBtn" data-slot="attacker">検索</button>
 
 
       <label for="atk-ability">特性</label>
@@ -81,7 +85,6 @@
         S <input type="number" id="atk-ev-spe" name="atkEvsSpe" min="0" max="252" value="0" />
       </div>
 
-
       <div>
         <label for="atk-ivs-mode">個体値モード</label>
         <select id="atk-ivs-mode" name="atkIvsMode">
@@ -89,7 +92,6 @@
           <option value="manual">手入力</option>
         </select>
       </div>
-
 
       <div id="atk-ivs-manual" style="display:none">
         <label>個体値（0-31）</label>
@@ -101,7 +103,6 @@
         <input type="number" id="atk-iv-spe" min="0" max="31" value="31" />
       </div>
 
-
     </fieldset>
 
 
@@ -109,12 +110,12 @@
     <fieldset>
     <legend>攻撃側（サポートポケモン）</legend>
 
-
     <!-- Support slots: 3 repeats. JS can clone or use these three blocks -->
     <div class="support-slot" data-index="1">
       <h4>サポート1</h4>
       <label>ポケモン</label>
-      <input type="text" class="support-species" data-populate="pokemon"></input>
+      <input type="text" class="support-species" data-populate="pokemon">
+      <button type="button" class="searchBtn" data-slot="support1">検索</button>
       <label>特性</label>
       <select class="support-ability"></select>
       <label>持ち物</label>
@@ -122,12 +123,12 @@
       <label>技</label>
       <select class="support-move" data-populate-moves></select>
     </div>
-
 
     <div class="support-slot" data-index="2">
       <h4>サポート2</h4>
       <label>ポケモン</label>
-      <input type="text" class="support-species" data-populate="pokemon"></input>
+      <input type="text" class="support-species" data-populate="pokemon">
+      <button type="button" class="searchBtn" data-slot="support2">検索</button>
       <label>特性</label>
       <select class="support-ability"></select>
       <label>持ち物</label>
@@ -136,11 +137,11 @@
       <select class="support-move" data-populate-moves></select>
     </div>
 
-
     <div class="support-slot" data-index="3">
       <h4>サポート3</h4>
       <label>ポケモン</label>
-      <input type="text" class="support-species" data-populate="pokemon"></input>
+      <input type="text" class="support-species" data-populate="pokemon">
+      <button type="button" class="searchBtn" data-slot="support3">検索</button>
       <label>特性</label>
       <select class="support-ability"></select>
       <label>持ち物</label>
@@ -157,18 +158,18 @@
     <fieldset>
     <legend>バトル補正</legend>
 
-
     <div class="stat-stages">
-      <label>攻撃段階</label>
-      <input type="number" id="stage-atk" name="stageAtk" min="-6" max="6" value="0" />
-      <label>特攻段階</label>
-      <input type="number" id="stage-spa" name="stageSpa" min="-6" max="6" value="0" />
       <label>防御段階</label>
       <input type="number" id="stage-def" name="stageDef" min="-6" max="6" value="0" />
       <label>特防段階</label>
       <input type="number" id="stage-spd" name="stageSpd" min="-6" max="6" value="0" />
     </div>
-
+    <div class="stat-stages">
+      <label>攻撃段階</label>
+      <input type="number" id="stage-atk" name="stageAtk" min="-6" max="6" value="0" />
+      <label>特攻段階</label>
+      <input type="number" id="stage-spa" name="stageSpa" min="-6" max="6" value="0" />
+    </div>
 
     <label for="weather">天候</label>
     <select id="weather" name="weather">
@@ -179,7 +180,6 @@
       <option value="snow">雪</option>
     </select>
 
-
     <label for="field">フィールド</label>
     <select id="field" name="field">
       <option value="none">なし</option>
@@ -189,12 +189,10 @@
       <option value="psychic">サイコフィールド</option>
     </select>
 
-
     <div class="support-effects">
-    <label><input type="checkbox" id="power-spot" name="powerSpot" /> パワースポット</label>
-    <label><input type="checkbox" id="damaging-orb" name="damagingOrb" /> わざわいのたま (命の珠系)</label>
+      <label><input type="checkbox" id="power-spot" name="powerSpot" /> パワースポット</label>
+      <label><input type="checkbox" id="damaging-orb" name="damagingOrb" /> わざわいのたま</label>
     </div>
-
 
     </fieldset>
 
