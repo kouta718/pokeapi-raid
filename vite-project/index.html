@@ -10,8 +10,8 @@
 
     <h2>ポケモンSVテラレイドバトルワンパン専用ダメージ計算アプリ</h2>
     <!-- レイド設定 -->
-    <section>
-      <h2>レイド設定</h2>
+    <fieldset>
+      <legend>レイド設定</legend>
       <label for="playerCount">プレイヤー人数:</label>
       <select id="playerCount">
         <option value="1">1人</option>
@@ -25,11 +25,12 @@
         <option value="2">2</option>
         <option value="3">3</option>
       </select>
-    </section>
+    </fieldset>
 
     <!-- レイドボス情報 -->
-    <section>
-      <h2>レイドボス設定</h2>
+    <fieldset>
+      <legend>レイドボス設定</legend>
+
       <label for="starCount">星数:</label>
       <select id="starCount">
         <option value="5">⭐︎5</option>
@@ -38,15 +39,9 @@
       </select>
       <label for="def-species">ポケモン</label>
       <select id="def-species" name="defSpecies" data-populate="pokemon"></select>
-
-
       <label for="def-tera">テラタイプ</label>
       <select id="def-tera" name="defTera"></select>
-
-
-      <label for="def-nature">性格補正</label>
-      <select id="def-nature" name="defNature"></select>
-    </section>
+    </fieldset>
 
 
 
@@ -54,39 +49,36 @@
     <fieldset>
       <legend>攻撃側（メインアタッカー）</legend>
 
-
       <label for="atk-species">ポケモン</label>
-      <select id="atk-species" name="atkSpecies" data-populate="pokemon"></select>
+      <input type="text" id="atk-species" name="atkSpecies" data-populate="pokemon"></input>
 
 
       <label for="atk-ability">特性</label>
       <select id="atk-ability" name="atkAbility"></select>
-
-
       <label for="atk-item">持ち物</label>
       <select id="atk-item" name="atkItem"></select>
 
-
       <label for="atk-move-1">技1</label>
-      <select id="atk-move-1" name="atkMove1" data-populate-moves></select>
-
-
+      <select id="atk-move-1" name="upMove1" data-populate-moves></select>
       <label for="atk-move-2">技2</label>
-      <select id="atk-move-2" name="atkMove2" data-populate-moves></select>
-
+      <select id="atk-move-2" name="upMove2" data-populate-moves></select>
 
       <label for="atk-nature">性格補正</label>
-      <select id="atk-nature" name="atkNature"></select>
-
+      <select id="atk-nature" name="atkNature">
+        <option value="hp">HP</option>
+        <option value="atk">攻撃</option>
+        <option value="contact">特攻</option>
+        <option value="speed">素早さ</option>
+      </select>
 
       <div class="evs-ivs">
         <label>努力値</label>
-        <input type="number" id="atk-ev-hp" name="atkEvsHp" min="0" max="252" value="252" />
-        <input type="number" id="atk-ev-atk" name="atkEvsAtk" min="0" max="252" value="252" />
-        <input type="number" id="atk-ev-def" name="atkEvsDef" min="0" max="252" value="0" />
-        <input type="number" id="atk-ev-spa" name="atkEvsSpa" min="0" max="252" value="0" />
-        <input type="number" id="atk-ev-spd" name="atkEvsSpd" min="0" max="252" value="4" />
-        <input type="number" id="atk-ev-spe" name="atkEvsSpe" min="0" max="252" value="0" />
+        H <input type="number" id="atk-ev-hp" name="atkEvsHp" min="0" max="252" value="252" />
+        A <input type="number" id="atk-ev-atk" name="atkEvsAtk" min="0" max="252" value="252" />
+        B <input type="number" id="atk-ev-def" name="atkEvsDef" min="0" max="252" value="0" />
+        C <input type="number" id="atk-ev-spa" name="atkEvsSpa" min="0" max="252" value="0" />
+        D <input type="number" id="atk-ev-spd" name="atkEvsSpd" min="0" max="252" value="4" />
+        S <input type="number" id="atk-ev-spe" name="atkEvsSpe" min="0" max="252" value="0" />
       </div>
 
 
@@ -120,10 +112,9 @@
 
     <!-- Support slots: 3 repeats. JS can clone or use these three blocks -->
     <div class="support-slot" data-index="1">
-      <label for="def-species">ポケモン</label>
       <h4>サポート1</h4>
       <label>ポケモン</label>
-      <select class="support-species" data-populate="pokemon"></select>
+      <input type="text" class="support-species" data-populate="pokemon"></input>
       <label>特性</label>
       <select class="support-ability"></select>
       <label>持ち物</label>
@@ -136,7 +127,7 @@
     <div class="support-slot" data-index="2">
       <h4>サポート2</h4>
       <label>ポケモン</label>
-      <select class="support-species" data-populate="pokemon"></select>
+      <input type="text" class="support-species" data-populate="pokemon"></input>
       <label>特性</label>
       <select class="support-ability"></select>
       <label>持ち物</label>
@@ -149,7 +140,7 @@
     <div class="support-slot" data-index="3">
       <h4>サポート3</h4>
       <label>ポケモン</label>
-      <select class="support-species" data-populate="pokemon"></select>
+      <input type="text" class="support-species" data-populate="pokemon"></input>
       <label>特性</label>
       <select class="support-ability"></select>
       <label>持ち物</label>
