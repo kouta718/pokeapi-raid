@@ -1,30 +1,23 @@
 import './style.css'
 
+import { getPokemonInfo } from './api.js';
 
-// 共通処理
-async function fetchPokemonData(slot) {
-    const input = document.querySelector(`#${slot}-species`);
-    const abilitySelect = document.querySelector(`#${slot}-ability`);
 
-    const name = input.value.toLowerCase();
-    const url = `https://pokeapi.co/api/v2/pokemon/${name}`;
-    const res = await fetch(url);
-    const data = await res.json();
+async function showPokemon(pokeName) {
+    const info = await getPokemonInfo(pokeName);
 
-    // 特性セット
-    abilitySelect.innerHTML = "";
-    data.abilities.forEach(ability => {
-    const opt = document.createElement("option");
-    opt.value = ability.ability.name;
-    opt.textContent = ability.ability.name;
-    abilitySelect.appendChild(opt);
-    });
+    if (info) {
+        console.log("名前:", info.name);
+        console.log("タイプ:", info.types.join(", "));
+        console.log("特性:", info.abilities.join(", "));
+        console.log("技（最初の5件）:", info.moves.slice(0, 5).join(", "));
+        console.log("種族値:");
+        info.stats.forEach(s => {
+            console.log(` - ${s.name}: ${s.base}`);
+        });
+    } else {
+    console.log("ポケモンが見つかりませんでした");
+    }
 }
 
-// まとめてイベント登録
-document.querySelectorAll(".searchBtn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-    const slot = e.target.closest(".pokemon-slot").dataset.slot;
-    fetchPokemonData(slot);
-    });
-});
+showPokemon("pikachu");
