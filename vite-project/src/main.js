@@ -1,6 +1,6 @@
 import './style.css'
 
-import { getPokemonInfo } from './api.js';
+import { getPokemonInfo } from './modules/api.js';
 
 
 async function showPokemon(pokeName) {

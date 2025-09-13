@@ -1,10 +1,3 @@
-import axios from 'axios';
-
-const instance = axios.create({
-    baseURL: 'https://pokeapi.co/api/v2/pokemon/',
-    timeout: 1000,
-});
-
 export const getPokemonInfo = async (pokeName) => {
     try {
         const response = await instance.get(pokeName.toLowerCase().trim());
