@@ -6,6 +6,7 @@ const instance = axios.create({
 });
 
 
+// ポケモン
 export const getPokemonData = async (pokeName) => {
     try {
         const response = await instance.get(pokeName);

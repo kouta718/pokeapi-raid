@@ -24,7 +24,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
@@ -33,6 +32,10 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+fieldset{
+  width: 1000px;
 }
 
 #app {
@@ -61,6 +64,14 @@ h1 {
 
 .read-the-docs {
   color: #888;
+}
+
+.result {
+  padding: 20px;
+  border: 1px solid #fff;
+  margin-top: 20px;
+  width: 600px;
+  text-align: center;
 }
 
 button {
@@ -94,3 +105,6 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+

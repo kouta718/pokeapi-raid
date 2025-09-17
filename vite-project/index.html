@@ -8,28 +8,11 @@
   </head>
   <body>
 
-    <h2>ポケモンSVテラレイドバトルワンパン専用ダメージ計算アプリ</h2>
-    <!-- レイド設定 -->
-    <fieldset>
-      <legend>レイド設定</legend>
-      <label for="playerCount">プレイヤー人数:</label>
-      <select id="playerCount">
-        <option value="1">1人</option>
-        <option value="2">2人</option>
-        <option value="3">3人</option>
-        <option value="4" selected>4人</option>
-      </select>
-      <label for="turnCount">想定想定ターン数:</label>
-      <select id="turnCount">
-        <option value="1" selected>1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select>
-    </fieldset>
+    <h2>ポケモンSVテラレイドバトルワンパンできるか計算</h2>
 
-    <!-- レイドボス情報 -->
+    <!-- レイドポケモンポケモン情報 -->
     <fieldset>
-      <legend>レイドボス設定</legend>
+      <legend>レイドポケモンポケモン設定</legend>
 
       <label for="starCount">星数:</label>
       <select id="starCount">
@@ -37,11 +20,13 @@
         <option value="6" selected>⭐︎6</option>
         <option value="7">⭐︎7</option>
       </select>
-      <label for="def-species">ポケモン</label>
-      <input id="def-species" name="defSpecies" data-populate="pokemon">
-      <button type="button" class="searchBtn" data-slot="defender">検索</button>
-      <label for="def-ability">特性</label>
-      <select id="def-ability" name="defAbility"></select>
+
+      <form action="#" class="form" id="def-form">
+        <input type="text" name="defName" placeholder="ポケモン名">
+        <button type="submit">検索</button>
+      </form>
+      <div class="result" id="def-result"></div>
+
       <label for="def-tera">テラスタイプ</label>
       <select id="def-tera" name="defTera"></select>
     </fieldset>
@@ -52,107 +37,53 @@
     <fieldset>
       <legend>攻撃側（メインアタッカー）</legend>
 
-      <label for="atk-species">ポケモン</label>
-      <input type="text" id="atk-species" name="atkSpecies" data-populate="pokemon">
-      <button type="button" class="searchBtn" data-slot="attacker">検索</button>
-
-
-      <label for="atk-ability">特性</label>
-      <select id="atk-ability" name="atkAbility"></select>
-      <label for="atk-item">持ち物</label>
-      <select id="atk-item" name="atkItem"></select>
-
-      <label for="atk-move-1">技1</label>
-      <select id="atk-move-1" name="upMove1" data-populate-moves></select>
-      <label for="atk-move-2">技2</label>
-      <select id="atk-move-2" name="upMove2" data-populate-moves></select>
+      <form action="#" class="form" id="atk-form">
+        <input type="text" name="atkName" placeholder="ポケモン名">
+        <button type="submit">検索</button>
+      </form>
+      <div class="result" id="atk-result"></div>
 
       <label for="atk-nature">性格補正</label>
       <select id="atk-nature" name="atkNature">
-        <option value="hp">HP</option>
+        <option value="hp">無し</option>
         <option value="atk">攻撃</option>
         <option value="contact">特攻</option>
-        <option value="speed">素早さ</option>
       </select>
 
       <div class="evs-ivs">
         <label>努力値</label>
-        H <input type="number" id="atk-ev-hp" name="atkEvsHp" min="0" max="252" value="252" />
-        A <input type="number" id="atk-ev-atk" name="atkEvsAtk" min="0" max="252" value="252" />
-        B <input type="number" id="atk-ev-def" name="atkEvsDef" min="0" max="252" value="0" />
-        C <input type="number" id="atk-ev-spa" name="atkEvsSpa" min="0" max="252" value="0" />
-        D <input type="number" id="atk-ev-spd" name="atkEvsSpd" min="0" max="252" value="4" />
-        S <input type="number" id="atk-ev-spe" name="atkEvsSpe" min="0" max="252" value="0" />
+        <div class="counter">
+          A  <input type="number" id="atk-ev-atk" name="atkEvsAtk" min="0" max="252" value="0" />
+          <button>min</button>
+          <button>max</button>
+        </div>
+        <div class="counter">
+          C <input type="number" id="atk-ev-spa" name="atkEvsSpa" min="0" max="252" value="0" />
+          <button>min</button>
+          <button>max</button>
+        </div>
+        <div class="counter">
+          S <input type="number" id="atk-ev-spe" name="atkEvsSpe" min="0" max="252" value="0" />
+          <button>min</button>
+          <button>max</button>
+        </div>
       </div>
 
       <div>
-        <label for="atk-ivs-mode">個体値モード</label>
+        <label for="atk-ivs-mode">個体値（0-31）</label>
         <select id="atk-ivs-mode" name="atkIvsMode">
           <option value="max">自動最大</option>
           <option value="manual">手入力</option>
         </select>
       </div>
 
-      <div id="atk-ivs-manual" style="display:none">
-        <label>個体値（0-31）</label>
-        <input type="number" id="atk-iv-hp" min="0" max="31" value="31" />
-        <input type="number" id="atk-iv-atk" min="0" max="31" value="31" />
-        <input type="number" id="atk-iv-def" min="0" max="31" value="31" />
-        <input type="number" id="atk-iv-spa" min="0" max="31" value="31" />
-        <input type="number" id="atk-iv-spd" min="0" max="31" value="31" />
-        <input type="number" id="atk-iv-spe" min="0" max="31" value="31" />
+      <div class="atk-ivs-manual" style="display:none">
+        A <input type="number" id="atk-iv-hp" min="0" max="31" value="31" />
+        C <input type="number" id="atk-iv-atk" min="0" max="31" value="31" />
+        S <input type="number" id="atk-iv-def" min="0" max="31" value="31" />
       </div>
 
     </fieldset>
-
-
-    <!-- 4. 攻撃側（サポートポケモン三体） -->
-    <fieldset>
-    <legend>攻撃側（サポートポケモン）</legend>
-
-    <!-- Support slots: 3 repeats. JS can clone or use these three blocks -->
-    <div class="support-slot" data-index="1">
-      <h4>サポート1</h4>
-      <label>ポケモン</label>
-      <input type="text" class="support-species" data-populate="pokemon">
-      <button type="button" class="searchBtn" data-slot="support1">検索</button>
-      <label>特性</label>
-      <select class="support-ability"></select>
-      <label>持ち物</label>
-      <select class="support-item"></select>
-      <label>技</label>
-      <select class="support-move" data-populate-moves></select>
-    </div>
-
-    <div class="support-slot" data-index="2">
-      <h4>サポート2</h4>
-      <label>ポケモン</label>
-      <input type="text" class="support-species" data-populate="pokemon">
-      <button type="button" class="searchBtn" data-slot="support2">検索</button>
-      <label>特性</label>
-      <select class="support-ability"></select>
-      <label>持ち物</label>
-      <select class="support-item"></select>
-      <label>技</label>
-      <select class="support-move" data-populate-moves></select>
-    </div>
-
-    <div class="support-slot" data-index="3">
-      <h4>サポート3</h4>
-      <label>ポケモン</label>
-      <input type="text" class="support-species" data-populate="pokemon">
-      <button type="button" class="searchBtn" data-slot="support3">検索</button>
-      <label>特性</label>
-      <select class="support-ability"></select>
-      <label>持ち物</label>
-      <select class="support-item"></select>
-      <label>技</label>
-      <select class="support-move" data-populate-moves></select>
-    </div>
-
-
-    </fieldset>
-
 
     <!-- 5. バトル補正の状態表示 -->
     <fieldset>
@@ -170,6 +101,19 @@
       <label>特攻段階</label>
       <input type="number" id="stage-spa" name="stageSpa" min="-6" max="6" value="0" />
     </div>
+
+    <label>
+      <input type="radio" name="item" value="choice-goggles" /> こだわり眼鏡
+    </label>
+    <label>
+      <input type="radio" name="item" value="choice-band" /> こだわりハチマキ
+    </label>
+    <label>
+      <input type="radio" name="item" value="life-orb" /> いのちのたま
+    </label>
+    <label>
+      <input type="radio" name="item" value="plate" /> プレート系（1.2倍）
+    </label>
 
     <label for="weather">天候</label>
     <select id="weather" name="weather">
@@ -192,6 +136,9 @@
     <div class="support-effects">
       <label><input type="checkbox" id="power-spot" name="powerSpot" /> パワースポット</label>
       <label><input type="checkbox" id="damaging-orb" name="damagingOrb" /> わざわいのたま</label>
+      <label><input type="checkbox" id="cursed-sword" name="cursedSword" /> わざわいのつるぎ</label>
+      <label><input type="checkbox" id="ikedom" name="ikedom" /> いけドン</label>
+      <label><input type="checkbox" id="help-hand" name="helpHand" /> てだすけ</label>
     </div>
 
     </fieldset>
@@ -214,5 +161,6 @@
 
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/counter.js"></script>
   </body>
 </html>
